@@ -8,9 +8,9 @@ from utils.adapter import Adapter
 
 class SVM:
 
-    def __init__(self, c, gamma):
-        self.c = c
-        self.gamma = gamma
+    def __init__(self, hyper_parameter_value):
+        self.c = hyper_parameter_value['c']
+        self.gamma = hyper_parameter_value['gamma']
         self.predictor = None
 
     def predict(self, data):
