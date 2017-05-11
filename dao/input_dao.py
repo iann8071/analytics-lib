@@ -2,9 +2,12 @@ import pandas as pd
 import pymysql
 from config.database_config import DatabaseConfig
 from config.sql_config import SqlConfig
+import zipfile
 
 
 class InputDao:
+
+    lib_zip = 'analytics-lib.zip'
 
     def __init__(self):
         self.db_config = DatabaseConfig().parse_config()
@@ -21,4 +24,6 @@ class InputDao:
         return self.db_con
 
     def read_data_as_pdf(self):
-        return pd.read_sql(open(self.sql_config['sqls']['read_data']).read(), self.db_con)
+        _zip = zipfile.ZipFile(self.lib_zip)
+        sql = _zip.open(self.sql_config['sqls']['read_data'], "rU")
+        return pd.read_sql(sql.read().decode('ascii'), self.db_con)

@@ -10,5 +10,5 @@ class MRange:
         result = []
         while _from < to:
             result.append(_from)
-            _from += diff
+            _from *= diff
         return result

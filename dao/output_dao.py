@@ -1,4 +1,3 @@
-import pandas as pd
 import pymysql
 from config.database_config import DatabaseConfig
 from config.sql_config import SqlConfig
@@ -26,16 +25,18 @@ class OutputDao:
         with self.db_con.cursor() as cursor:
             sql = "create table {outputs} ({columns})".format(
                 outputs=self.table_name,
-                columns=",".join([" ".join(key, columns[key]) for key in columns.keys()])
+                columns=",".join([" ".join([key, columns[key]]) for key in columns.keys()])
             )
+            result = cursor.execute(sql)
             self.db_con.commit()
 
     def write_data(self, value):
         with self.db_con.cursor() as cursor:
-            sql = "INSERT INTO user ({keys}) VALUES ({values})".format(
+            sql = "INSERT INTO {table_name} ({keys}) VALUES ({values})".format(
+                table_name=self.table_name,
                 keys=','.join(value.keys()),
-                values = ','.join(value.values())
+                values = ','.join([str(_value) for _value in value.values()])
             )
-            result = cursor.execute(sql, (4, "Shanky", 38))
+            result = cursor.execute(sql)
             self.db_con.commit()
 
