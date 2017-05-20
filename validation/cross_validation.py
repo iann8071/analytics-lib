@@ -22,3 +22,17 @@ class CrossValidation:
             count += 1
 
         return results
+
+    def points(self, data):
+        results = []
+        count = 1
+        for training_data_indices, test_data_indices in KFold(n_splits=self.k_fold).split(data):
+            training_data = data.loc[training_data_indices, :]
+            test_data = data.loc[test_data_indices, :]
+            count += 1
+            results.append({
+                'training_data': training_data,
+                'test_data': test_data,
+                'count': count
+            })
+        return results
