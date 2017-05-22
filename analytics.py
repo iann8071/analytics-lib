@@ -9,7 +9,7 @@ class Analytics:
 
     @classmethod
     def start(cls, executor, validator, learner, data, features, answer, write_score):
-        paralleled_data = validator.points
+        paralleled_data = validator.points(data)
         executor.execute(
             lambda paralleled_data_element: write_score(
                 learner.train_and_predict (
