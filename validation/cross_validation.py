@@ -17,7 +17,8 @@ class CrossValidation:
                 test_data.loc[:, features]),
                 test_data.loc[:, answer],
                 test_data,
-                learner.hyper_parameters()
+                learner.hyper_parameters(),
+                count
             )
             count += 1
 

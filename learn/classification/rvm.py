@@ -9,10 +9,20 @@ class RVM:
 
     def __init__(self):
         self.predictor = None
+        self.gamma = None
+
+    def set_hyper_parameters(self, hyper_parameter_value):
+        self.gamma = hyper_parameter_value['gamma']
+        return self
 
     @classmethod
     def result_columns(self):
         return ['class1', 'class2']
+
+    def hyper_parameters(self):
+        return {
+            'gamma': self.gamma
+        }
 
     def train_and_predict(self, training_data_features, training_data_answers, data):
         self.train(training_data_features, training_data_answers)
@@ -22,5 +32,5 @@ class RVM:
         return self.predictor.predict_proba(Adapter.to_np(data))
 
     def train(self, training_data_features, training_data_answers):
-        clf = RVC()
+        clf = RVC(coef1=self.gamma)
         self.predictor = clf.fit(training_data_features, training_data_answers)
