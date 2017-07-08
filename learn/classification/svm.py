@@ -8,18 +8,13 @@ from utils.adapter import Adapter
 
 class SVM:
 
-    def __init__(self):
-        self.c = None
-        self.gamma = None
+    def __init__(self, hyper_parameter_value):
+        self.c = hyper_parameter_value['c']
+        self.gamma = hyper_parameter_value['gamma']
         self.predictor = None
 
     def predict(self, data):
         return self.predictor.predict(Adapter.to_np(data))
-
-    def set_hyper_parameters(self, hyper_parameter_value):
-        self.c = hyper_parameter_value['c']
-        self.gamma = hyper_parameter_value['gamma']
-        return self
 
     def hyper_parameters(self):
         return {
